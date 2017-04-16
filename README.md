@@ -3,5 +3,7 @@
 
 
 netease_music.py 
+
 获取网易云音乐歌单信息。必要参数歌单id
+
 $ python netease_music.py playlist 691812099
