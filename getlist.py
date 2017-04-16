@@ -10,14 +10,16 @@ def getlist(play_url):
     s = requests.session()
     s = BeautifulSoup(s.get(play_url,headers = headers).content, "lxml")
     musics = json.loads(s.find('textarea',{'style':'display:none;'}).text)
+    list = {}
     for music in musics:
         song_id = music['id']
         title = music['name']
         author = music['artists'][0]['name']
-        album_id = music['album']['id']
         album = music['album']['name']
+        album_id = music['album']['id']
         album_picurl = music['album']['picUrl']
-        print('歌曲标题：{}   歌手：{}    专辑：{}'.format(title,author,album))
+        list[song_id]=[title,author,album,album_id,album_picurl]
+    return list
 
 
 headers = {
@@ -29,6 +31,13 @@ headers = {
 # play_url = 'http://music.163.com/playlist?id='
 
 play_url = 'http://music.163.com/playlist?id=' + sys.argv[1]
-getlist( play_url)
+list = getlist( play_url)
+for key in list:
+    print('歌曲id：',key)
+    print('     歌曲标题'+list[key][0])
+    print('     作者：'+list[key][1])
+    print('     专辑：'+list[key][2])
+    print('     专辑id：',list[key][3])
+    print('     专辑图片：'+list[key][4])
 
 
