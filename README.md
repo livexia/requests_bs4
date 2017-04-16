@@ -3,4 +3,4 @@
 
 
 getlist.py 获取网易云音乐歌单信息。必要参数歌单id
-$ python getlist.py playlist 691812099
+$ python getlist.py 691812099
