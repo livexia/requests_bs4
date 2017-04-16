@@ -28,8 +28,7 @@ headers = {
 }
 # play_url = 'http://music.163.com/playlist?id='
 
-if sys.argv[1] == "playlist":
-    play_url = 'http://music.163.com/playlist?id=' + sys.argv[2]
-    getlist( play_url)
+play_url = 'http://music.163.com/playlist?id=' + sys.argv[1]
+getlist( play_url)
 
 
