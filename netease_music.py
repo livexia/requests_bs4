@@ -6,7 +6,7 @@ import sys
 from bs4 import BeautifulSoup
 
 
-def getlist(play_url):
+def getinfo(play_url):
     s = requests.session()
     s = BeautifulSoup(s.get(play_url,headers = headers).content, "lxml")
     musics = json.loads(s.find('textarea',{'style':'display:none;'}).text)
@@ -35,12 +35,12 @@ headers = {
 
 
 # play_url = 'http://music.163.com/playlist?id='
-if sys.argv[1] == 'playlist' or  sys.argv[1] == 'artist' or  sys.argv[1] == 'album':
+if sys.argv[1] == 'playlist' or sys.argv[1] == 'artist' or sys.argv[1] == 'album':
     play_url = 'http://music.163.com/' + sys.argv[1] + '?id=' + sys.argv[2]
 else:
     print('参数错误，请检查')
 
-list = getlist(play_url)
+list = getinfo(play_url)
 for key in list:
     print('歌曲id：',key)
     print('     歌曲标题：'+list[key][0])
