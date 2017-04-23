@@ -10,21 +10,26 @@ import pymysql
 def getinfo(play_url):
     s = requests.session()
     s = BeautifulSoup(s.get(play_url,headers = headers).content, "lxml")
-    musics = json.loads(s.find('textarea',{'style':'display:none;'}).text)
-    info = {}
-    for music in musics:
-        song_id = music['id']
-        title = music['name']
-        author = music['artists'][0]['name']
-        author_id = music['artists'][0]['id']
-        album = music['album']['name']
-        album_id = music['album']['id']
-        album_pic_url = music['album']['picUrl']
-        song_url = 'http://music.163.com/song?id=' + str(song_id)
-        author_url = 'http://music.163.com/artist?id=' + str(author_id)
-        album_url = 'http://music.163.com/album?id=' + str(album_id)
-        info[song_id]=[title,author,author_id,album,album_id,[song_url,author_url,album_url,album_pic_url]]
-    return info
+    judge = s.find('class',{'class':'n-for404'})
+    if judge != '':
+        print("输入id有误，请检查")
+        exit()
+    else:
+        musics = json.loads(s.find('textarea',{'style':'display:none;'}).text)
+        info = {}
+        for music in musics:
+            song_id = music['id']
+            title = music['name']
+            author = music['artists'][0]['name']
+            author_id = music['artists'][0]['id']
+            album = music['album']['name']
+            album_id = music['album']['id']
+            album_pic_url = music['album']['picUrl']
+            song_url = 'http://music.163.com/song?id=' + str(song_id)
+            author_url = 'http://music.163.com/artist?id=' + str(author_id)
+            album_url = 'http://music.163.com/album?id=' + str(album_id)
+            info[song_id]=[title,author,author_id,album,album_id,[song_url,author_url,album_url,album_pic_url]]
+        return info
 
 
 def insertsql(info):
@@ -56,9 +61,12 @@ play_url = 'http://music.163.com/'
 if sys.argv[1] == 'playlist' or sys.argv[1] == 'artist' or sys.argv[1] == 'album':
     play_url = play_url + sys.argv[1] + '?id=' + sys.argv[2]
 else:
-    print('参数错误，请检查')
+    print('第一个参数错误，请检查单词拼写')
+    exit()
+
 
 info = getinfo(play_url)
+
 for key in info:
     print('歌曲id：', key)
     print('     歌曲标题：'+info[key][0])
