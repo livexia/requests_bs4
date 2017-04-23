@@ -28,6 +28,7 @@ def getinfo(play_url):
 
 
 def insertsql(info):
+    #修改你的mysql
     conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='XGCxiagu0cha0515', db='NeteaseMusic')
     cur = conn.cursor()
     for key in info:
