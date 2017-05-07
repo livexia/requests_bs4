@@ -17,7 +17,7 @@ class MySQL:
             cur.execute("REPLACE into author values(%s,%s)",
                         (info[key][2], info[key][1].encode('utf-8')))
             cur.execute("REPLACE into album values(%s,%s,%s,%s,%s,%s)",
-                        (info[key][4], info[key][3].encode('utf-8'), info[key][5][3].encode('utf-8'), info[key][2]))
+                        (info[key][4], info[key][3].encode('utf-8'), info[key][5][3].encode('utf-8'), info[key][2], '', ''))
 
         conn.commit()
         cur.close()
