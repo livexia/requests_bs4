@@ -1,6 +1,5 @@
 
-
-class Spider:
+class UrlParameter:
 
     headers = {
         'Referer':'http://music.163.com/',
@@ -9,5 +8,8 @@ class Spider:
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
     }
 
-    def __init__(self, headers):
-        Spider.headers = headers
+    base_url = 'http://music.163.com/'
+
+    def __init__(self, headers, base_url):
+        UrlParameter.headers = headers
+        UrlParameter.base_url = base_url

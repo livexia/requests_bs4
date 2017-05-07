@@ -1,8 +1,9 @@
+#encoding=utf8
 import requests
 import sys
 import json
 from bs4 import BeautifulSoup
-from spider import *
+from NeteaseMusic.urlparameter import UrlParameter
 
 
 class Album:
@@ -19,7 +20,7 @@ class Album:
         Album.base_url = 'http://music.163.com/artist/album?id=' + str(artist_id) + '&limit=1200&offset=0'
 
         s = requests.session()
-        s = BeautifulSoup(s.get(Album.base_url,headers = Spider.headers).content, "lxml")
+        s = BeautifulSoup(s.get(Album.base_url,headers = UrlParameter.headers).content, "lxml")
         albums = s.find('ul',{'data-id':artist_id})
 
         list_album = {}
@@ -35,9 +36,12 @@ class Album:
         #print(list_album)
         return list_album
 
-list_album=Album.crawl_album(13193)
-
-for album in list_album:
-    url = 'http://music.163.com' + list_album[album][0]
-    print(url)
-
+    @staticmethod
+    def album_url(artist_id):
+        i = 0
+        urls = {}
+        list_album = Album.crawl_album(artist_id)
+        for album in list_album:
+            urls[i] = UrlParameter.base_url + list_album[album][0]
+            i = i + 1
+        return urls
