@@ -5,16 +5,15 @@ import json
 import sys
 from bs4 import BeautifulSoup
 import pymysql
+from
 
+class Getinfo:
+    def __init__(self):
+        ;
 
-def getinfo(play_url):
-    s = requests.session()
-    s = BeautifulSoup(s.get(play_url,headers = headers).content, "lxml")
-    judge = s.find('class',{'class':'n-for404'})
-    if judge != '':
-        print("输入id有误，请检查")
-        exit()
-    else:
+    def getinfo(play_url):
+        s = requests.session()
+        s = BeautifulSoup(s.get(play_url,headers = Spider.headers).content, "lxml")
         musics = json.loads(s.find('textarea',{'style':'display:none;'}).text)
         info = {}
         for music in musics:
@@ -41,8 +40,8 @@ def insertsql(info):
                     (key, info[key][0].encode('utf-8'), info[key][2], info[key][4]))
         cur.execute("REPLACE into author values(%s,%s)",
                     (info[key][2], info[key][1].encode('utf-8')))
-        cur.execute("REPLACE into album values(%s,%s,%s)",
-                    (info[key][4], info[key][3].encode('utf-8'), info[key][5][3].encode('utf-8')))
+        cur.execute("REPLACE into album values(%s,%s,%s,%s,%s,%s)",
+                    (info[key][4], info[key][3].encode('utf-8'), info[key][5][3].encode('utf-8'), info[key][2]))
 
     conn.commit()
     cur.close()
