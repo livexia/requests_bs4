@@ -17,7 +17,7 @@ def print_info(info):
         print('          歌曲链接：'+info[key][5][0])
         print('          歌手链接：'+info[key][5][1])
         print('          专辑链接：'+info[key][5][2])
-        print('          专辑图片：'+info[key][5][3])
+        print('          专辑图片：', info[key][5][3])
 
 
 if sys.argv[1] == 'playlist' or sys.argv[1] == 'artist_hot' or sys.argv[1] == 'album' or sys.argv[1] == 'artist_all':

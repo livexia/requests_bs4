@@ -11,7 +11,8 @@ class Getinfo:
     @staticmethod
     def get_info(url):
         s = requests.session()
-        s = BeautifulSoup(s.get(url,headers = UrlParameter.headers).content, "lxml")
+        s = BeautifulSoup(s.get(url,headers = UrlParameter.random_ua()).content, "lxml")
+        print(UrlParameter.random_ua())
         musics = json.loads(s.find('textarea',{'style':'display:none;'}).text)
         info = {}
         for music in musics:

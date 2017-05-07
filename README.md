@@ -5,12 +5,12 @@
 
     requests_bs4
     ├── NeteaseMusic
-    │   ├── album.py
-    │   ├── getinfo.py
-    │   ├── mysql.py
-    │   └── urlparameter.py
+    │   ├── album.py //爬取指定歌手的所有专辑
+    │   ├── getinfo.py //爬取指定专辑、歌单、歌手的热门50单曲
+    │   ├── mysql.py //数据存入mysql
+    │   └── urlparameter.py //连接参数，headers......
     ├── README.md
-    └── neteasemusic.py
+    └── neteasemusic.py  //程序入口
 
 neteasemusic.py 
 

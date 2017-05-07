@@ -18,9 +18,9 @@ class Album:
     @staticmethod
     def crawl_album(artist_id):
         Album.base_url = 'http://music.163.com/artist/album?id=' + str(artist_id) + '&limit=1200&offset=0'
-
         s = requests.session()
-        s = BeautifulSoup(s.get(Album.base_url,headers = UrlParameter.headers).content, "lxml")
+        s = BeautifulSoup(s.get(Album.base_url,headers = UrlParameter.random_ua()).content, "lxml")
+        print(UrlParameter.random_ua())
         albums = s.find('ul',{'data-id':artist_id})
 
         list_album = {}
