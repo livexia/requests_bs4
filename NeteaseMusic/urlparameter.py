@@ -10,6 +10,9 @@ class UrlParameter:
     }
 
     base_url = 'http://music.163.com/'
+    artist_base_url = 'http://music.163.com/artist?id='
+    album_base_url = 'http://music.163.com/album?id='
+    playlist_base_url = 'http://music.163.com/playlist?id='
 
     def __init__(self, headers, base_url):
         UrlParameter.headers = headers

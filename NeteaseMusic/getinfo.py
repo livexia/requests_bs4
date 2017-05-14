@@ -12,9 +12,12 @@ class Getinfo:
     def get_info(url):
         s = requests.session()
         s = BeautifulSoup(s.get(url,headers = UrlParameter.random_ua()).content, "lxml")
-        print(UrlParameter.random_ua())
-        musics = json.loads(s.find('textarea',{'style':'display:none;'}).text)
         info = {}
+        try:
+            musics = json.loads(s.find('textarea',{'style':'display:none;'}).text)
+        except json.decoder.JSONDecodeError:
+            print("该专辑不存在歌曲")
+            return info;
         for music in musics:
             song_id = music['id']
             title = music['name']
