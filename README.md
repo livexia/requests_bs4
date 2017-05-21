@@ -2,16 +2,22 @@
 一些利用requests+bs4写的python 脚本
 
 结构目录
-
-    requests_bs4
-    ├── NeteaseMusic
+    
+    ── NeteaseMusic
     │   ├── album.py //爬取指定歌手的所有专辑
     │   ├── artist.py //爬取所有歌手
     │   ├── getinfo.py //爬取指定专辑、歌单、歌手的热门50单曲
     │   ├── mysql.py //数据存入mysql
+    │   ├── general.py //本地文件操作处理，断点用
+    │   ├── get404.py //异常处理
+    │   ├── multithreading.py //多线程，待完成
     │   └── urlparameter.py //连接参数，headers......
     ├── README.md
-    └── neteasemusic.py  //程序入口
+    ├── album_crawled.txt //完成爬取的专辑
+    ├── album_queue.txt  //列队中的专辑
+    ├── artist_crawled.txt  //完成爬取的歌手
+    ├── artist_queue.txt //列队中的歌手
+    └── neteasemusic.py //入口程序
 
 neteasemusic.py 
 

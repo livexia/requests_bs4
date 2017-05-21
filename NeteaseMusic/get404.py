@@ -16,6 +16,7 @@ def get_404(url):
     else:
         return 0
 
+
 def get_404_album(url):
     s = requests.session()
     s = BeautifulSoup(s.get(url,headers = UrlParameter.random_ua()).content, "lxml")

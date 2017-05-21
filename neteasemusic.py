@@ -20,7 +20,7 @@ def crawl_all_album(artist_id, flag1, flag2):
         list_to_file(Album.album_list, 'album_queue.txt')
     else:
         album_list = file_to_list('album_queue.txt')
-        # print(album_list)
+        album_crawled = file_to_list('album_crawled.txt')
     for album_id in album_list:
         url = UrlParameter.album_base_url + album_id
         info = Getinfo.get_info(url)
@@ -51,6 +51,7 @@ def crawl_all_song(flag1, flag2, flag3, flag4):
             list_to_file(artist_list, 'artist_queue.txt')
         else:
             artist_list = file_to_list('artist_queue.txt')
+            artist_crawled = file_to_list('artist_crawled.txt')
         for artist_id in artist_list:
             crawl_all_album(artist_id, flag1, flag2)
             artist_list.remove(artist_id)
