@@ -26,10 +26,11 @@ class Album:
         albums = s.find('ul', {'data-id': artist_id})
         # Album.album_dict = {}
         Album.album_url_list = []
-        if get_404(Album.base_url):
+        if get_404_album(Album.base_url):
             print(Album.base_url)
             print("该歌手不存在专辑")
         else:
+            print(albums)
             for album in albums.children:
                 if album != '\n':
                     album_id = album.find('a',{'class': 'msk'})['href'].split("=")[1]

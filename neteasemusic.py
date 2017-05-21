@@ -10,6 +10,7 @@ import os
 
 
 def crawl_all_album(artist_id, flag1, flag2):
+    album_crawled = []
     if os.path.getsize('album_queue.txt') == 0:
         Album.crawl_album(artist_id)
         album_list=Album.album_list
@@ -18,14 +19,15 @@ def crawl_all_album(artist_id, flag1, flag2):
         truncate_file('album_crawled.txt')
         list_to_file(Album.album_list, 'album_queue.txt')
     else:
-        album_list = file_to_list('artist_queue.txt')
+        album_list = file_to_list('album_queue.txt')
         # print(album_list)
     for album_id in album_list:
         url = UrlParameter.album_base_url + album_id
         info = Getinfo.get_info(url)
-        Artist.album_list.remove(album_id)
-        list_to_file(album_id, 'album_queue.txt')
-        list_to_file(album_id, 'album_crawled.txt')
+        album_list.remove(album_id)
+        album_crawled.append(album_id)
+        list_to_file(album_list, 'album_queue.txt')
+        list_to_file(album_crawled, 'album_crawled.txt')
         if flag1 == 'y':
             MySQL.insert_sql(info)
         if flag2 == 'y':
@@ -37,7 +39,7 @@ def crawl_all_album(artist_id, flag1, flag2):
 
 def crawl_all_song(flag1, flag2, flag3, flag4):
     if flag3 == 'y':
-        # flag4 = input('是否从头开始爬取(y/n 默认n): ')
+        artist_crawled = []
         if flag4 == 'y':
             Artist.crawl_all_artist()
             artist_list = Artist.artist_list
@@ -49,13 +51,12 @@ def crawl_all_song(flag1, flag2, flag3, flag4):
             list_to_file(artist_list, 'artist_queue.txt')
         else:
             artist_list = file_to_list('artist_queue.txt')
-            for aa in artist_list:
-                print(aa)
         for artist_id in artist_list:
             crawl_all_album(artist_id, flag1, flag2)
-            Artist.artist_list.remove(artist_id)
+            artist_list.remove(artist_id)
+            artist_crawled.append(artist_id)
             list_to_file(artist_list, 'artist_queue.txt')
-            list_to_file(artist_list, 'artist_crawled.txt')
+            list_to_file(artist_crawled, 'artist_crawled.txt')
         truncate_file('artist_queue.txt')
         truncate_file('artist_crawled.txt')
         print('All song,done!')
@@ -84,7 +85,6 @@ def print_info(info):
         print('          歌手链接：'+info[key][5][1])
         print('          专辑链接：'+info[key][5][2])
         print('          专辑图片：', info[key][5][3])
-
 
 
 if sys.argv[1] == 'playlist' or sys.argv[1] == 'artist_hot' or sys.argv[1] == 'album' or sys.argv[1] == 'artist_all' or sys.argv[1] == 'crawlall':

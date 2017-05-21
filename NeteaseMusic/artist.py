@@ -36,9 +36,4 @@ class Artist:
                     if artist != '\n':
                         artist_id = artist.find('a',{'class': 's-fc0'})['href'].split("=")[1]
                         Artist.artist_list.append(artist_id)
-                        # name = artist.find('a', {'class': 's-fc0'}).text
-                        # Artist.artist_dict[artist_id]=[name,[key1,key2]]
         print("Artist,done!")
-        # list_artist = Artist.artist_dict
-        # for artist in list_artist:
-        #     Artist.artist_url_list.append(UrlParameter.artist_base_url + artist)

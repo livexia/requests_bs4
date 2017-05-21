@@ -15,7 +15,7 @@ class Getinfo:
         s = BeautifulSoup(s.get(url,headers = UrlParameter.random_ua()).content, "lxml")
         info = {}
         if get_404(url):
-            print("该专辑不存在歌曲")
+            print("不存在歌曲")
             return info;
         # try:
         else:
