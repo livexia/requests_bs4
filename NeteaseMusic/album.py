@@ -12,7 +12,7 @@ class Album:
     author_id = ''
     base_url = ''
     # album_dict = {}
-    album_list = []
+    album_queue = []
 
     def __init__(self, author_id, base_url):
         Album.author_id = author_id
@@ -31,5 +31,5 @@ class Album:
             for album in albums.children:
                 if album != '\n':
                     album_id = album.find('a',{'class': 'msk'})['href'].split("=")[1]
-                    Album.album_list.append(album_id)
+                    Album.album_queue.append(album_id)
 

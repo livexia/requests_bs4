@@ -10,7 +10,7 @@ class Artist:
     author_id = ''
     base_url = ''
     # artist_dict = {}
-    artist_list = []
+    artist_queue = []
 
     def __init__(self, author_id, base_url):
         Artist.author_id = author_id
@@ -23,6 +23,10 @@ class Artist:
         for i in range(65,91):
             initial.append(i)
         initial.append(0)
+
+        initial = [65]
+        url_id = [1001]
+
         Artist.artist_dict = {}
         Artist.artist_url_list = []
         for key1 in url_id:
@@ -35,5 +39,5 @@ class Artist:
                 for artist in albums.children:
                     if artist != '\n':
                         artist_id = artist.find('a',{'class': 's-fc0'})['href'].split("=")[1]
-                        Artist.artist_list.append(artist_id)
+                        Artist.artist_queue.append(artist_id)
         print("Artist,done!")

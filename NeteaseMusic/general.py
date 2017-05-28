@@ -63,3 +63,18 @@ def list_to_file(links, file_name):
 def truncate_file(file_name):
     with open(file_name, "w") as f:
         f.truncate()
+
+
+def print_info(info):
+    for key in info:
+        print('歌曲id：', key)
+        print('     歌曲标题：'+info[key][0])
+        print('     歌手：'+info[key][1])
+        print('     歌手id：', info[key][2])
+        print('     专辑：'+info[key][3])
+        print('     专辑id：', info[key][4])
+        print('     Url：')
+        print('          歌曲链接：'+info[key][5][0])
+        print('          歌手链接：'+info[key][5][1])
+        print('          专辑链接：'+info[key][5][2])
+        print('          专辑图片：', info[key][5][3])

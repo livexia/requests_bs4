@@ -1,17 +1,20 @@
-import threading
-from queue import Queue
-# from spider import Spider
-# from domain import *
+#encoding=utf8
+from NeteaseMusic.album import *
+from NeteaseMusic.artist import *
+from NeteaseMusic.getinfo import *
+from NeteaseMusic.mysql import *
+from NeteaseMusic.urlparameter import *
 from NeteaseMusic.general import *
+from NeteaseMusic.spider import *
+from queue import Queue
+import sys
+import os
+import threading
+import time
 
-# PROJECT_NAME = 'aqniu'
-# HOMEPAGE = 'http://edu.aqniu.com/'
-# DOMAIN_NAME = get_domain_name(HOMEPAGE)
-# QUEUE_FILE = PROJECT_NAME + '/queue.txt'
-# CRAWLED_FILE = PROJECT_NAME + '/crawled.txt'
-NUMBER_OF_THREADS = 2000
+
+NUMBER_OF_THREADS = 5
 queue = Queue()
-# Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME)
 
 
 def create_workers():
@@ -23,24 +26,26 @@ def create_workers():
 
 def work():
     while True:
-        url = queue.get()
-        Spider.crawl_page(threading.current_thread().name, url)
+        id = queue.get()
+        Spider.artist_process_queue()
         queue.task_done()
 
 
-def create_jobs():
-    for link in file_to_set(QUEUE_FILE):
+def create_jobs(file):
+    for link in file_to_list(file):
         queue.put(link)
     queue.join()
-    crawl()
+    crawl(file)
 
 
-def crawl():
-    queued_links = file_to_set(QUEUE_FILE)
+def crawl(file):
+    queued_links = file_to_list(file)
     if len(queued_links) > 0:
         print(str(len(queued_links)) + ' links in the queue')
-        create_jobs()
+        create_jobs(file)
 
 
 create_workers()
-crawl()
+Spider('n','n','y','y')
+Spider.crawl_all_song()
+crawl(Spider.artist_queue_file)
