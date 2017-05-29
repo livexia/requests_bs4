@@ -5,7 +5,7 @@ from NeteaseMusic.getinfo import *
 from NeteaseMusic.mysql import *
 from NeteaseMusic.urlparameter import *
 from NeteaseMusic.general import *
-# from NeteaseMusic.multithreading import *
+from NeteaseMusic.multithreading import *
 from NeteaseMusic.spider import *
 import sys
 import os
@@ -77,6 +77,7 @@ import os
 #         print('All song,done!')
 #
 
+
 def crawl_other(flag1='n',flag2='n'):
     url = UrlParameter.base_url + sys.argv[1].split('_')[0] + '?id=' + sys.argv[2]
     info = Getinfo.get_info(url)
@@ -105,10 +106,10 @@ if sys.argv[1] == 'playlist' or sys.argv[1] == 'artist_hot' or sys.argv[1] == 'a
         # flag4 = input('是否从头开始爬取(y/n 默认n): ')
         flag1 = flag2 = 'n'
         flag3 = flag4 = 'y'
+        create_workers()
         Spider(flag1,flag2,flag3,flag4)
         Spider.crawl_all_song()
-        print(Spider.artist_queue)
-        # crawl_all_song(flag1, flag2, flag3, flag4)
+        crawl(Spider.artist_queue_file)
     else:
         flag1 = input("是否需要保存至mysql(y/n 默认n): ")
         flag2 = input("是否需要输出信息(y/n 默认n): ")

@@ -52,52 +52,45 @@ class Spider:
                 Spider.artist_crawled = file_to_list(Spider.artist_crawled_file)
 
     @staticmethod
-    def crawl_all_album(artist_id):
-        if os.path.getsize(Spider.album_queue_file) == 0:
-            Album.crawl_album(artist_id)
-            Spider.album_queue = Album.album_queue
-            Spider.album_queue.reverse()
-            create_data_files('album', UrlParameter.base_url)
-            truncate_file(Spider.album_crawled_file)
-            list_to_file(Album.album_queue, Spider.album_queue_file)
-        else:
-            Spider.album_queue = file_to_list(Spider.album_queue_file)
-            Spider.album_queue.reverse()
-            Spider.album_crawled = file_to_list(Spider.album_crawled_file)
-        Spider.album_process_queue()
-
-    @staticmethod
     def artist_process_queue():
+        print('artist_process_queue')
         while True:
+            artist_crawled = []
             if not Spider.artist_queue:
                 break
             artist_id = Spider.artist_queue.pop()
             Spider.crawl_all_album(artist_id)
-            Spider.artist_crawled.append(artist_id)
+            artist_crawled.append(artist_id)
             list_to_file(Spider.artist_queue, Spider.artist_queue_file)
-            list_to_file(Spider.artist_crawled, Spider.artist_crawled_file)
+            list_to_file(artist_crawled, Spider.artist_crawled_file)
             print("爬取歌手id=" + artist_id + '所有歌曲成功')
             print(len(Spider.artist_queue))
-                # exit(0);
 
     @staticmethod
-    def album_process_queue():
-        while True:
-            if not Spider.album_queue:
-                break
-            while Spider.album_queue:
-                album_id = Spider.album_queue.pop()
-                url = UrlParameter.album_base_url + album_id
-                info = Getinfo.get_info(url)
-                Spider.album_crawled.append(album_id)
-                list_to_file(Spider.album_queue, Spider.album_queue_file)
-                list_to_file(Spider.album_crawled, Spider.album_crawled_file)
-                if Spider.flag1 == 'y':
-                    MySQL.insert_sql(info)
-                if Spider.flag2 == 'y':
-                    print_info(info)
-                print(len(Spider.album_queue))
+    def crawl_all_album(artist_id):
+        if os.path.getsize(Spider.album_queue_file) == 0:
+            Album.crawl_album(artist_id)
+            album_queue = Album.album_queue
+            album_crawled = []
+            album_queue.reverse()
+            create_data_files('album', UrlParameter.base_url)
             truncate_file(Spider.album_crawled_file)
-            truncate_file(Spider.album_queue_file)
-
-
+            list_to_file(Album.album_queue, Spider.album_queue_file)
+        else:
+            album_queue = file_to_list(Spider.album_queue_file)
+            album_queue.reverse()
+            album_crawled = file_to_list(Spider.album_crawled_file)
+        while album_queue:
+            album_id = album_queue.pop()
+            url = UrlParameter.album_base_url + album_id
+            info = Getinfo.get_info(url)
+            album_crawled.append(album_id)
+            list_to_file(album_queue, Spider.album_queue_file)
+            list_to_file(album_crawled, Spider.album_crawled_file)
+            if Spider.flag1 == 'y':
+                MySQL.insert_sql(info)
+            if Spider.flag2 == 'y':
+                print_info(info)
+            print(len(album_queue))
+        truncate_file(Spider.album_crawled_file)
+        truncate_file(Spider.album_queue_file)

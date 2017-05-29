@@ -13,7 +13,7 @@ import threading
 import time
 
 
-NUMBER_OF_THREADS = 5
+NUMBER_OF_THREADS = 2
 queue = Queue()
 
 
@@ -42,6 +42,7 @@ def crawl(file):
     queued_links = file_to_list(file)
     if len(queued_links) > 0:
         print(str(len(queued_links)) + ' links in the queue')
+        time.sleep(50)
         create_jobs(file)
 
 
